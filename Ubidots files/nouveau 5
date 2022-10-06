@@ -1,0 +1,1 @@
+function Decoder(bytes, port) {  var temperature = (bytes[0] << 8) | bytes[1];  var humidity = (bytes[2] << 8) | bytes[3];    return {    temperature: temperature / 100,     humidity: humidity / 100  }}

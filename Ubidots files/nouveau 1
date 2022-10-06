@@ -1,0 +1,1 @@
+def decode_data(hex_array):payload = {}temperature = (int(hex_array[2:4].hex(), 16) + int(hex_array[4:6].hex(), 16))/2humidity = (int(hex_array[6:8].hex(), 16) + int(hex_array[8:10].hex(), 16))/2payload["temperature"] = temperature/100payload["humidity"] = humidity/100return payload
