@@ -122,15 +122,15 @@ void setup() {
   Serial.print(DHT.humidity);
   Serial.print("%  ");
 
-//  DHT.read22(dht_apin22);
-//  modem.print(DHT.temperature);
-//  Serial.print("temperature22 = ");
-//  Serial.print(DHT.temperature);
-//  Serial.println("C  ");
-//  modem.print(DHT.humidity);
-//  Serial.print("Current humidity22 = ");
-//  Serial.print(DHT.humidity);
-//  Serial.print("%  ");
+  DHT.read22(dht_apin22);
+  modem.print(DHT.temperature);
+  Serial.print("temperature22 = ");
+  Serial.print(DHT.temperature);
+  Serial.println("C  ");
+  modem.print(DHT.humidity);
+  Serial.print("Current humidity22 = ");
+  Serial.print(DHT.humidity);
+  Serial.print("%  ");
   
   err = modem.endPacket(true);
   if (err > 0) {

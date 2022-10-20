@@ -1,6 +1,6 @@
 #include <dht.h>
 
-
+#include "ArduinoLowPower.h"
 #define dht_apin A0 // Analog Pin sensor is connected to
  
 dht DHT;
@@ -26,7 +26,8 @@ void loop(){
     Serial.print(DHT.temperature); 
     Serial.println("C  ");
     
-    delay(5000);//Wait 5 seconds before accessing sensor again.
+    //delay(10000);//Wait 5 seconds before accessing sensor again.
+    LowPower.sleep(10000); // Sleep mode
  
   //Fastest should be once every two seconds.
  
