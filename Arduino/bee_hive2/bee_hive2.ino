@@ -3,15 +3,12 @@
   This sketch demonstrates the usage of MKR WAN 1300/1310 LoRa module.
 */
 
-
 /* Bibliothéques requises */
 #include <dht.h>
 #include <MKRWAN.h>
 #include <OneWire.h>
 #include <DallasTemperature.h>
 #include <HX711.h>
-#include <Wire.h>
-#include "DFRobot_INA219.h"
 
 /* Déclaration des Pins */
 #define LOADCELL_DOUT_PIN 5
@@ -28,23 +25,13 @@ dht DHT;          // DHT22
 LoRaModem modem;  // modem Lorawan
 
 //Liaison avec The Things Network
-//String appEui = "0000000000000000";
-//String appKey = "DB0DD3985A57E1B00C0B1871D5DD9114";
-// Carte Sapidda
 String appEui = "0000000000000000";
-String appKey = "0DAB3DDAF184926E0347CD274CFEF983";
+String appKey = "DB0DD3985A57E1B00C0B1871D5DD9114";
 
 // Pour la lecture des sondes de temp
 OneWire ds18x20[] = { 6, 7 };
 const int oneWireCount = sizeof(ds18x20) / sizeof(OneWire);
 DallasTemperature sensor[oneWireCount];
-
-// Capteur de puissance-luminosité INA
-DFRobot_INA219_IIC     ina219(&Wire, INA219_I2C_ADDRESS4);
-// Revise the following two paramters according to actual reading of the INA219 and the multimeter
-// for linearly calibration
-float ina219Reading_mA = 1000;
-float extMeterReading_mA = 1000;
 
 /*  Variables */
 float calibration_factor = 13350;                                                                      // Facteur de calibration capteur poids
@@ -77,9 +64,23 @@ void setup() {
     Serial.println("Please make sure that the latest modem firmware is installed.");
     Serial.println("To update the firmware upload the 'MKRWANFWUpdate_standalone.ino' sketch.");
   }
-  //Serial.print("Your device EUI is: ");
-  //Serial.println(modem.deviceEUI());
+  Serial.print("Your device EUI is: ");
+  Serial.println(modem.deviceEUI());
+}
 
+void loop() {
+
+  byte etatEntree = digitalRead(brocheBouton);  // retourne 0 (LOW) ou 1 (HIGH)
+  //Serial.println(etatEntree);                   // affichage dans Terminal Série
+  //delay(1000); // je mets un temps de delai
+
+  if (etatEntree == HIGH && !buttonState) {
+    digitalWrite(L1, HIGH);      // j'allume ma led
+    delay(1000);                 // je mets un temps de delai
+    digitalWrite(L1, LOW);       // Eteindre L1
+    buttonState = !buttonState;  // je change l'état de false à true
+  }
+  buttonState = etatEntree;
   int mode = 1;
   int connected;
   if (mode == 1) {
@@ -183,17 +184,7 @@ void setup() {
   long zero_factor = scale.read_average();  //Get a baseline reading
   Serial.print("Zero factor: ");            //This can be used to remove the need to tare the scale. Useful in permanent scale projects.
   Serial.println(zero_factor);
-  /*
-  meas = scale.get_units(10);
-  Serial.print(meas);
-  p = meas / 3.7;
 
-  real_meas = meas - p;
-  Serial.print(real_meas);
-  Serial.print(" kg ");  //Change this to kg 
-  var_poids = (short)(real_meas * 100);
-  modem.write(var_poids);
-  */
   scale.set_scale(calibration_factor);  //Adjust to this calibration factor
   Serial.print("Reading: ");
   Serial.print((scale.get_units() / 2.2046), 1);  // 1 chiffre après la virgule
@@ -206,7 +197,6 @@ void setup() {
   Serial.print(calibration_factor);
   Serial.println();
 
-
   var_poids = (short)(real_meas * 100);
   modem.write(var_poids);
 
@@ -216,22 +206,6 @@ void setup() {
   } else {
     Serial.println("Error sending message :(");
   }
-}
-
-void loop() {
-
-  byte etatEntree = digitalRead(brocheBouton);  // retourne 0 (LOW) ou 1 (HIGH)
-  //Serial.println(etatEntree);                   // affichage dans Terminal Série
-  //delay(1000); // je mets un temps de delai
-
-  if (etatEntree == HIGH && !buttonState) {
-    digitalWrite(L1, HIGH);      // j'allume ma led
-    delay(1000);                 // je mets un temps de delai
-    digitalWrite(L1, LOW);       // Eteindre L1
-    buttonState = !buttonState;  // je change l'état de false à true
-  }
-  buttonState = etatEntree;
-
   //while (modem.available()) {
   //  Serial.write(modem.read());
   //}
