@@ -1,5 +1,18 @@
 # Connected-Bee-Hive
 
+Harware
+
+Software
+
+Conception of the system
+
+Schematics
+
+Code
+
+Credits
+
+
 L’objectif de ce projet est de développer un dispositif complet qui permet de mesurer plusieurs grandeurs physiques et de les rendre disponible à travers une Interface Homme Machine (IHM) sur une application internet. Ce projet doit permettre de récupérer et mettre en forme des données mesurées par des capteurs et ensuite les envoyer sur un serveur (Cloud) grâce à une technologie longue portée et basse consommation (LPWAN).
 
 Spécifications techniques : 
