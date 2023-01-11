@@ -1,6 +1,10 @@
-# Connected-Bee-Hive
+# Connected-Bee-Hive with an Arduino MKRWAN
 
-Harware
+
+
+In this project, we've developed a complete device that makes it possible to measure several physical quantities and make them available through a Human Machine Interface (HMI) on a web application. This project aims to retrieve and format data measured by sensors and then send them to a server (Cloud) using long-range and low-power technology (LPWAN).
+
+Hardware
 
 Software
 
@@ -12,8 +16,6 @@ Code
 
 Credits
 
-
-L’objectif de ce projet est de développer un dispositif complet qui permet de mesurer plusieurs grandeurs physiques et de les rendre disponible à travers une Interface Homme Machine (IHM) sur une application internet. Ce projet doit permettre de récupérer et mettre en forme des données mesurées par des capteurs et ensuite les envoyer sur un serveur (Cloud) grâce à une technologie longue portée et basse consommation (LPWAN).
 
 Spécifications techniques : 
 Autonome : Batterie LiPo rechargeable et panneaux solaires comme source d'énergie.
